@@ -20,6 +20,7 @@ public class MenuController {
     private MainMenu menuStuard;
     private MainMenu sourceData;
     private MainMenu sourceChange;
+    private MainMenu sourceQuestion;
     @Autowired
     public MenuController(
             MainMenu mainMenu,
@@ -49,7 +50,7 @@ public class MenuController {
 
     @GetMapping("/find_data")
     public Map<String, Object> getMenuFindData(){
-        return menuData.getMenu();
+        return sourceData.getMenu();
     }
 
     public Map<String, Object> getMenuFindDataMessage(){
