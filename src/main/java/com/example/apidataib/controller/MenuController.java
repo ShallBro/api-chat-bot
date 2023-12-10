@@ -17,7 +17,9 @@ public class MenuController {
     private MainMenu menuQuestion;
     private MainMenu menuChange;
     private MainMenu menuHelp;
+    private MainMenu menuStuard;
     private MainMenu sourceData;
+    private MainMenu sourceChange;
     @Autowired
     public MenuController(
             MainMenu mainMenu,
@@ -25,13 +27,17 @@ public class MenuController {
             MainMenu menuQuestion,
             MainMenu menuChange,
             MainMenu menuHelp,
-            MainMenu sourceData) {
+            MainMenu sourceData,
+            MainMenu sourceChange,
+            MainMenu menuStuard) {
         this.mainMenu = mainMenu;
         this.menuData = menuData;
         this.menuQuestion = menuQuestion;
         this.menuChange = menuChange;
         this.menuHelp = menuHelp;
         this.sourceData = sourceData;
+        this.sourceChange = sourceChange;
+        this.menuStuard = menuStuard;
     }
     @GetMapping("/menu")
     public Map<String,Object> getMainMenu(boolean error) {
@@ -77,8 +83,35 @@ public class MenuController {
     }
 
     @GetMapping("/change")
-    public Map<String, Object> getChangeMenu(){
+    public Map<String, Object> getChangeMenu(boolean error){
+        if (error){
+            return СhangeMessageAndButtons.getError(menuChange,sourceChange);
+        }
         return menuChange.getMenu();
+    }
+
+    @GetMapping("/change/validation")
+    public ResponseEntity<?> getMenuChangeValid(@RequestParam("q") String str){
+        if("Неполные данные".equals(str)){
+            String notFull = "Прикрепите ссылку на данные, которые необходимо дополнить и обоснование для изменения. " +
+                            "Так же укажите почту для связи.";
+            return ResponseEntity.ok(getChangeAnswer(notFull));
+        }
+        else if("Неактуальные данные".equals(str)){
+            String nonActual = "Прикрепите ссылку на данные, которые необходимо удалить и обоснование для удаления." +
+                    "Так же укажите почту для связи.";
+            return ResponseEntity.ok(getChangeAnswer(nonActual));
+        }
+        else if("Другое".equals(str)){
+            String another = "Опишите свой запрос, как можно подробнее. Так же укажите почту для связи.";
+            return ResponseEntity.ok(getChangeAnswer(another));
+        }
+        return ResponseEntity.ok(getChangeMenu(true));
+    }
+
+    @GetMapping("/change/answer")
+    public Map<String, Object> getChangeAnswer(String answer){
+        return СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
     }
 
     @GetMapping("/question")
@@ -105,10 +138,9 @@ public class MenuController {
         return menuHelp.getMenu();
     }
 
-    @GetMapping("/question/find/no/mail")
-    public Map<String,Object> getFindNoMail(){
-        return СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
-                "Спасибо за ваш запрос! Он будет передан стюарду данных и проверен",false);
+    @GetMapping("/stuard")
+    public Map<String,Object> getStuard(){
+        return menuStuard.getMenu();
     }
 
     @GetMapping("/validation")
@@ -120,7 +152,7 @@ public class MenuController {
             return ResponseEntity.ok(getQuestion());
         }
         else if("Создать запрос на изменение".equals(str)){
-            return ResponseEntity.ok(getChangeMenu());
+            return ResponseEntity.ok(getChangeMenu(false));
         }
         return ResponseEntity.ok(getMainMenu(true));
     }

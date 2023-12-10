@@ -58,6 +58,7 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    @Scope("prototype")
     public MainMenu menuChange(){
         Map<String,String> answerBot = new HashMap<>();
         MainMenu menuChange = new MainMenu("Какого рода ошибка обнаружена?");
@@ -81,11 +82,23 @@ public class SpringConfig implements WebMvcConfigurer {
         return mainMenu;
     }
     @Bean
+    public MainMenu menuStuard(){
+        Map<String,String> answerBot = new HashMap<>();
+        MainMenu menuStuard = new MainMenu("Спасибо за ваш запрос! Он будет передан стюарду данных и проверен");
+        answerBot.put("name",robot);
+        answerBot.put("message",menuStuard.getAnswerBot());
+        menuStuard.setMenu("buttonData",new ArrayList<>());
+        menuStuard.setMenu("bubbleData",answerBot);
+        return menuStuard;
+    }
+    @Bean
     public MainMenu sourceData(){
         return new MainMenu(menuData());
     }
-
-
+    @Bean
+    public MainMenu sourceChange(){
+        return new MainMenu(menuChange());
+    }
 
 
     @Override
