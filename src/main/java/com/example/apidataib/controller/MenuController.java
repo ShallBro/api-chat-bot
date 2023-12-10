@@ -12,7 +12,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class MenuController {
+public class MenuController{
     private MainMenu mainMenu;
     private MainMenu menuData;
     private MainMenu menuQuestion;
@@ -22,6 +22,7 @@ public class MenuController {
     private MainMenu sourceData;
     private MainMenu sourceChange;
     private MainMenu sourceQuestion;
+    private MainMenu menuInput;
     @Autowired
     public MenuController(
             MainMenu mainMenu,
@@ -32,7 +33,8 @@ public class MenuController {
             MainMenu sourceData,
             MainMenu sourceChange,
             MainMenu menuStuard,
-            MainMenu sourceQuestion) {
+            MainMenu sourceQuestion,
+            MainMenu menuInput) {
         this.mainMenu = mainMenu;
         this.menuData = menuData;
         this.menuQuestion = menuQuestion;
@@ -42,6 +44,11 @@ public class MenuController {
         this.sourceChange = sourceChange;
         this.menuStuard = menuStuard;
         this.sourceQuestion = sourceQuestion;
+        this.menuInput = menuInput;
+    }
+    @GetMapping("/input")
+    public Map<String,Object> getInput(){
+        return menuInput.getMenu();
     }
     @GetMapping("/menu")
     public Map<String,Object> getMainMenu(boolean error) {
@@ -60,7 +67,7 @@ public class MenuController {
         Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
                 "Введите точное наименование или ключевое слово для поиска",false);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat");
-        correct.put("redirect", null); // пока null, но тут будет еще ссылка на апи
+        correct.put("next_redirect", null); // пока null, но тут будет еще ссылка на апи
         return correct;
     }
 
@@ -80,7 +87,7 @@ public class MenuController {
         Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
                 "Хотите повторить процедуру поиска?",true);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat/");
-        correct.put("redirect", null);
+        correct.put("next_redirect", null);
         return correct;
     }
 
@@ -123,7 +130,7 @@ public class MenuController {
     public Map<String, Object> getChangeAnswer(String answer){
         Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
         correct.put("next_message", "http://localhost:9999/api/stuard");
-        correct.put("redirect", null); // добаваить редирект на почту
+        correct.put("next_redirect", null); // добаваить редирект на почту
         return correct;
     }
 
@@ -137,7 +144,7 @@ public class MenuController {
         Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
                 "Вы нашли ответ на наш вопрос?",true);
         correct.put("next_message", "http://localhost:9999/api/question/find/");
-        correct.put("redirect", null);
+        correct.put("next_redirect", null);
         return correct;
     }
     @GetMapping("/question/find/{answer}")
@@ -146,7 +153,7 @@ public class MenuController {
             Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
                     "Опишите вопрос, как можно подробнее. Так же укажите почту для связи.",false);
             correct.put("next_message", "http://localhost:9999/api/stuard");
-            correct.put("redirect", null); // добаваить редирект на почту
+            correct.put("next_redirect", null); // добаваить редирект на почту
             return correct;
         }
         return getHelp();
