@@ -2,6 +2,7 @@ package com.example.apidataib.controller;
 
 import com.example.apidataib.model.URL;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriUtils;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/api")
 public class RedirectController {
     private URL url;

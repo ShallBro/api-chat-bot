@@ -34,6 +34,8 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("status",200);
+        mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
+        mainMenu.setMenu("redirect", null);
         mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
                                                         "Создать запрос на изменение"));
         mainMenu.setMenu("bubbleData",answerBot);
@@ -48,12 +50,15 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("name",robot);
         answerBot.put("message",menuData.getAnswerBot());
         menuData.setMenu("status",200);
+        menuData.setMenu("next_message", "http://localhost:9999/api/find_data/validation?q=");
+        menuData.setMenu("redirect", null);
         menuData.setMenu("buttonData",List.of("Проверка качества","Проверка качества FormIT",
                 "Правило качества"));
         menuData.setMenu("bubbleData",answerBot);
         return menuData;
     }
     @Bean
+    @Scope("prototype")
     public MainMenu menuQuestion(){
         Map<String,String> answerBot = new HashMap<>();
         MainMenu menuQuestion = new MainMenu("Какой раздел системы Universe DG вас интересует?");
@@ -62,6 +67,8 @@ public class SpringConfig implements WebMvcConfigurer {
         menuQuestion.setMenu("status",200);
         menuQuestion.setMenu("buttonData",new ArrayList<>());
         menuQuestion.setMenu("bubbleData",answerBot);
+        menuQuestion.setMenu("next_message", "http://localhost:9999/api/question/find");
+        menuQuestion.setMenu("redirect", "http://localhost:9999/api/find_doc?q=");
         return menuQuestion;
     }
 
@@ -75,6 +82,8 @@ public class SpringConfig implements WebMvcConfigurer {
         menuChange.setMenu("status",200);
         menuChange.setMenu("buttonData",List.of("Неполные данные","Неакутальные данные",
                 "Другое"));
+        menuChange.setMenu("next_message", "http://localhost:9999/api/change/validation?q=");
+        menuChange.setMenu("redirect", null);
         menuChange.setMenu("bubbleData",answerBot);
         return menuChange;
     }
@@ -87,6 +96,8 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
                 "Создать запрос на изменение"));
+        mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
+        mainMenu.setMenu("redirect", null);
         mainMenu.setMenu("status",200);
         mainMenu.setMenu("bubbleData",answerBot);
         return mainMenu;
@@ -97,6 +108,8 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuStuard = new MainMenu("Спасибо за ваш запрос! Он будет передан стюарду данных и проверен");
         answerBot.put("name",robot);
         answerBot.put("message",menuStuard.getAnswerBot());
+        menuStuard.setMenu("next_message", "http://localhost:9999/api/help");
+        menuStuard.setMenu("redirect", null);
         menuStuard.setMenu("status",200);
         menuStuard.setMenu("buttonData",new ArrayList<>());
         menuStuard.setMenu("bubbleData",answerBot);
@@ -118,9 +131,9 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*"); // Разрешить запросы от всех источников
-        configuration.addAllowedMethod("*"); // Разрешить все HTTP методы
-        configuration.addAllowedHeader("*"); // Разрешить все заголовки
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

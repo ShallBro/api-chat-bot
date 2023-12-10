@@ -57,8 +57,11 @@ public class MenuController {
     }
 
     public Map<String, Object> getMenuFindDataMessage(){
-        return СhangeMessageAndButtons.changeMessageAndButtons(menuData,
+        Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
                 "Введите точное наименование или ключевое слово для поиска",false);
+        correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat");
+        correct.put("redirect", null); // пока null, но тут будет еще ссылка на апи
+        return correct;
     }
 
     @GetMapping("/find_data/validation")
@@ -74,8 +77,11 @@ public class MenuController {
 
     @GetMapping("/find_data/message/repeat")
     public Map<String,Object> getRepeat(){
-        return СhangeMessageAndButtons.changeMessageAndButtons(menuData,
+        Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
                 "Хотите повторить процедуру поиска?",true);
+        correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat/");
+        correct.put("redirect", null);
+        return correct;
     }
 
     @GetMapping("/find_data/message/repeat/{answer}")
@@ -115,7 +121,10 @@ public class MenuController {
 
     @GetMapping("/change/answer")
     public Map<String, Object> getChangeAnswer(String answer){
-        return СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
+        Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
+        correct.put("next_message", "http://localhost:9999/api/stuard");
+        correct.put("redirect", null); // добаваить редирект на почту
+        return correct;
     }
 
     @GetMapping("/question")
@@ -125,14 +134,20 @@ public class MenuController {
 
     @GetMapping("/question/find")
     public Map<String,Object> getFindQuestion(){
-        return СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
+        Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
                 "Вы нашли ответ на наш вопрос?",true);
+        correct.put("next_message", "http://localhost:9999/api/question/find/");
+        correct.put("redirect", null);
+        return correct;
     }
     @GetMapping("/question/find/{answer}")
     public Map<String,Object> getFindYesNo(@PathVariable String answer){
         if("Нет".equals(answer)){
-            return СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
+            Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
                     "Опишите вопрос, как можно подробнее. Так же укажите почту для связи.",false);
+            correct.put("next_message", "http://localhost:9999/api/stuard");
+            correct.put("redirect", null); // добаваить редирект на почту
+            return correct;
         }
         return getHelp();
     }
