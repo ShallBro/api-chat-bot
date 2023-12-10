@@ -30,7 +30,8 @@ public class MenuController {
             MainMenu menuHelp,
             MainMenu sourceData,
             MainMenu sourceChange,
-            MainMenu menuStuard) {
+            MainMenu menuStuard,
+            MainMenu sourceQuestion) {
         this.mainMenu = mainMenu;
         this.menuData = menuData;
         this.menuQuestion = menuQuestion;
@@ -39,6 +40,7 @@ public class MenuController {
         this.sourceData = sourceData;
         this.sourceChange = sourceChange;
         this.menuStuard = menuStuard;
+        this.sourceQuestion = sourceQuestion;
     }
     @GetMapping("/menu")
     public Map<String,Object> getMainMenu(boolean error) {
@@ -88,7 +90,7 @@ public class MenuController {
         if (error){
             return СhangeMessageAndButtons.getError(menuChange,sourceChange);
         }
-        return menuChange.getMenu();
+        return sourceChange.getMenu();
     }
 
     @GetMapping("/change/validation")
@@ -117,7 +119,7 @@ public class MenuController {
 
     @GetMapping("/question")
     public Map<String,Object> getQuestion(){
-        return menuQuestion.getMenu();
+        return sourceQuestion.getMenu();
     }
 
     @GetMapping("/question/find")

@@ -109,6 +109,10 @@ public class SpringConfig implements WebMvcConfigurer {
     public MainMenu sourceChange(){
         return new MainMenu(menuChange());
     }
+    @Bean
+    public MainMenu sourceQuestion(){
+        return new MainMenu(menuQuestion());
+    }
 
     @Bean
     public FilterRegistrationBean corsFilter() {
