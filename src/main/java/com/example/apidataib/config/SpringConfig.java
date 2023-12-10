@@ -28,6 +28,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu mainMenu = new MainMenu("Привет! Я чат бот платформы Universe DG. Чем могу помочь?");
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
+        mainMenu.setMenu("status",200);
         mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
                                                         "Создать запрос на изменение"));
         mainMenu.setMenu("bubbleData",answerBot);
@@ -41,6 +42,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuData = new MainMenu("Выберите тип данных, которые вас интересуют");
         answerBot.put("name",robot);
         answerBot.put("message",menuData.getAnswerBot());
+        menuData.setMenu("status",200);
         menuData.setMenu("buttonData",List.of("Проверка качества","Проверка качества FormIT",
                 "Правило качества"));
         menuData.setMenu("bubbleData",answerBot);
@@ -52,6 +54,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuQuestion = new MainMenu("Какой раздел системы Universe DG вас интересует?");
         answerBot.put("name",robot);
         answerBot.put("message",menuQuestion.getAnswerBot());
+        menuQuestion.setMenu("status",200);
         menuQuestion.setMenu("buttonData",new ArrayList<>());
         menuQuestion.setMenu("bubbleData",answerBot);
         return menuQuestion;
@@ -64,6 +67,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuChange = new MainMenu("Какого рода ошибка обнаружена?");
         answerBot.put("name",robot);
         answerBot.put("message",menuChange.getAnswerBot());
+        menuChange.setMenu("status",200);
         menuChange.setMenu("buttonData",List.of("Неполные данные","Неакутальные данные",
                 "Другое"));
         menuChange.setMenu("bubbleData",answerBot);
@@ -78,6 +82,7 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
                 "Создать запрос на изменение"));
+        mainMenu.setMenu("status",200);
         mainMenu.setMenu("bubbleData",answerBot);
         return mainMenu;
     }
@@ -87,6 +92,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuStuard = new MainMenu("Спасибо за ваш запрос! Он будет передан стюарду данных и проверен");
         answerBot.put("name",robot);
         answerBot.put("message",menuStuard.getAnswerBot());
+        menuStuard.setMenu("status",200);
         menuStuard.setMenu("buttonData",new ArrayList<>());
         menuStuard.setMenu("bubbleData",answerBot);
         return menuStuard;
