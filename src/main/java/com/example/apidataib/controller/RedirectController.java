@@ -16,7 +16,7 @@ import org.springframework.web.util.UriUtils;
         private final String strBeg = "https://doc.ru.universe-data.ru/2.5.0-EE/search.html?q=";
         private final String strEnd = "&check_keywords=yes&area=default#";
 
-        @PostMapping("/input_url")
+        @GetMapping("/input_url")
         @ResponseStatus(HttpStatus.NO_CONTENT)
         public void input(@RequestParam("q") String input){
             url.setUrl(input);
