@@ -34,7 +34,7 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("status",200);
-        mainMenu.setMenu("next_message", "http://localhost:9999/api/menu");
+        mainMenu.setMenu("next_message", "http://localhost:9999/api/menu?q=");
         mainMenu.setMenu("next_redirect", "http://localhost:9999/api/input_url?q=");
         mainMenu.setMenu("bubbleData",answerBot);
         mainMenu.setMenu("buttonData",new ArrayList<>());
@@ -80,7 +80,7 @@ public class SpringConfig implements WebMvcConfigurer {
         menuQuestion.setMenu("status",200);
         menuQuestion.setMenu("buttonData",new ArrayList<>());
         menuQuestion.setMenu("bubbleData",answerBot);
-        menuQuestion.setMenu("next_message", "http://localhost:9999/api/question/find");
+        menuQuestion.setMenu("next_message", "http://localhost:9999/api/question/find?q=");
         menuQuestion.setMenu("next_redirect", "http://localhost:9999/api/find_doc?q=");
         return menuQuestion;
     }
@@ -121,7 +121,7 @@ public class SpringConfig implements WebMvcConfigurer {
         MainMenu menuStuard = new MainMenu("Спасибо за ваш запрос! Он будет передан стюарду данных и проверен");
         answerBot.put("name",robot);
         answerBot.put("message",menuStuard.getAnswerBot());
-        menuStuard.setMenu("next_message", "http://localhost:9999/api/help");
+        menuStuard.setMenu("next_message", "http://localhost:9999/api/help?q=");
         menuStuard.setMenu("next_redirect", null);
         menuStuard.setMenu("status",200);
         menuStuard.setMenu("buttonData",new ArrayList<>());

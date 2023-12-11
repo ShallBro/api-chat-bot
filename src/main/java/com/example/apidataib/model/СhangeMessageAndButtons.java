@@ -12,6 +12,7 @@ public class СhangeMessageAndButtons {
         List<String> buttons = (List<String>) sourceMenu.getMenu().get("buttonData");
         String message = "Ошибка. Введите верный вариант, который я вам предложил";
         change.put("message",message);
+        correct.put("next_message",sourceMenu.getMenu().get("next_message"));
         correct.put("status",404);
         correct.put("bubbleData",change);
         correct.put("buttonData",buttons);
