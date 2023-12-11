@@ -12,7 +12,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class MenuController{
+public class RestMenuController {
     private MainMenu mainMenu;
     private MainMenu menuData;
     private MainMenu menuQuestion;
@@ -24,7 +24,7 @@ public class MenuController{
     private MainMenu sourceQuestion;
     private MainMenu menuInput;
     @Autowired
-    public MenuController(
+    public RestMenuController(
             MainMenu mainMenu,
             MainMenu menuData,
             MainMenu menuQuestion,
@@ -130,7 +130,7 @@ public class MenuController{
     public Map<String, Object> getChangeAnswer(String answer){
         Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
         correct.put("next_message", "http://localhost:9999/api/stuard?q=");
-        correct.put("next_redirect", null); // добаваить редирект на почту
+        correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
         return correct;
     }
 
@@ -153,7 +153,7 @@ public class MenuController{
             Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
                     "Опишите вопрос, как можно подробнее. Так же укажите почту для связи.",false);
             correct.put("next_message", "http://localhost:9999/api/stuard?q=");
-            correct.put("next_redirect", null); // добаваить редирект на почту
+            correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
             return correct;
         }
         return getHelp();
