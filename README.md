@@ -4,6 +4,6 @@
 Для того, чтобы собрать и запустить сервер введите команды:
 
 
-mvn package 
-mvn install
+mvn package <br/>
+mvn install <br/>
 java -jar target/api-data-ib-0.0.1-SNAPSHOT.jar
