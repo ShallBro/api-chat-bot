@@ -3,8 +3,11 @@ package com.example.apidataib.controller;
 import com.example.apidataib.model.СhangeMessageAndButtons;
 import com.example.apidataib.model.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +15,8 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class RestMenuController {
+public class RestMenuController  {
+    private RedirectController redirectController;
     private MainMenu mainMenu;
     private MainMenu menuData;
     private MainMenu menuQuestion;
@@ -34,7 +38,8 @@ public class RestMenuController {
             MainMenu sourceChange,
             MainMenu menuStuard,
             MainMenu sourceQuestion,
-            MainMenu menuInput) {
+            MainMenu menuInput,
+            RedirectController redirectController) {
         this.mainMenu = mainMenu;
         this.menuData = menuData;
         this.menuQuestion = menuQuestion;
@@ -45,6 +50,7 @@ public class RestMenuController {
         this.menuStuard = menuStuard;
         this.sourceQuestion = sourceQuestion;
         this.menuInput = menuInput;
+        this.redirectController = redirectController;
     }
     @GetMapping("/input")
     public Map<String,Object> getInput(){
@@ -67,7 +73,7 @@ public class RestMenuController {
         Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
                 "Введите точное наименование или ключевое слово для поиска",false);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat?q=");
-        correct.put("next_redirect", null); // пока null, но тут будет еще ссылка на апи
+        correct.put("next_redirect", "http://localhost:9999/api/site?q=");
         return correct;
     }
 
@@ -76,6 +82,7 @@ public class RestMenuController {
         List<String> buttons = (List<String>) sourceData.getMenu().get("buttonData");
         for (String button : buttons) {
             if (button.equals(str)){
+                redirectController.setUrlMessage(str);
                 return getMenuFindDataMessage();
             }
         }
