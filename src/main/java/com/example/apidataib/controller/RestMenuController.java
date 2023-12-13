@@ -3,30 +3,28 @@ package com.example.apidataib.controller;
 import com.example.apidataib.model.СhangeMessageAndButtons;
 import com.example.apidataib.model.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.example.apidataib.constants.StringConstants.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
 public class RestMenuController  {
-    private RedirectController redirectController;
-    private MainMenu mainMenu;
-    private MainMenu menuData;
-    private MainMenu menuQuestion;
-    private MainMenu menuChange;
-    private MainMenu menuHelp;
-    private MainMenu menuStuard;
-    private MainMenu sourceData;
-    private MainMenu sourceChange;
-    private MainMenu sourceQuestion;
-    private MainMenu menuInput;
+    private final RedirectController redirectController;
+    private final MainMenu mainMenu;
+    private final MainMenu menuData;
+    private final MainMenu menuQuestion;
+    private final MainMenu menuChange;
+    private final MainMenu menuHelp;
+    private final MainMenu menuStuard;
+    private final MainMenu sourceData;
+    private final MainMenu sourceChange;
+    private final MainMenu sourceQuestion;
+    private final MainMenu menuInput;
     @Autowired
     public RestMenuController(
             MainMenu mainMenu,
@@ -70,8 +68,7 @@ public class RestMenuController  {
     }
 
     public Map<String, Object> getMenuFindDataMessage(){
-        Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
-                "Введите точное наименование или ключевое слово для поиска",false);
+        Map<String,Object> correct = СhangeMessageAndButtons.change(menuData, FIND_MENU_MESSAGE,false);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat?q=");
         correct.put("next_redirect", "http://localhost:9999/api/site?q=");
         return correct;
@@ -91,8 +88,7 @@ public class RestMenuController  {
 
     @GetMapping("/find_data/message/repeat")
     public Map<String,Object> getRepeat(){
-        Map<String,Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuData,
-                "Хотите повторить процедуру поиска?",true);
+        Map<String,Object> correct = СhangeMessageAndButtons.change(menuData, FIND_MENU_REPEAT,true);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat/answer?q=");
         correct.put("next_redirect", null);
         return correct;
@@ -117,25 +113,20 @@ public class RestMenuController  {
     @GetMapping("/change/validation")
     public ResponseEntity<?> getMenuChangeValid(@RequestParam("q") String str){
         if("Неполные данные".equals(str)){
-            String notFull = "Прикрепите ссылку на данные, которые необходимо дополнить и обоснование для изменения. " +
-                            "Так же укажите почту для связи.";
-            return ResponseEntity.ok(getChangeAnswer(notFull));
+            return ResponseEntity.ok(getChangeAnswer(NOT_FULL_MESSAGE));
         }
         else if("Неактуальные данные".equals(str)){
-            String nonActual = "Прикрепите ссылку на данные, которые необходимо удалить и обоснование для удаления." +
-                    "Так же укажите почту для связи.";
-            return ResponseEntity.ok(getChangeAnswer(nonActual));
+            return ResponseEntity.ok(getChangeAnswer(NON_ACTUAL_MESSAGE));
         }
         else if("Другое".equals(str)){
-            String another = "Опишите свой запрос, как можно подробнее. Так же укажите почту для связи.";
-            return ResponseEntity.ok(getChangeAnswer(another));
+            return ResponseEntity.ok(getChangeAnswer(ANOTHER_MESSAGE));
         }
         return ResponseEntity.ok(getChangeMenu(true));
     }
 
     @GetMapping("/change/answer")
     public Map<String, Object> getChangeAnswer(String answer){
-        Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuChange, answer,false);
+        Map<String, Object> correct = СhangeMessageAndButtons.change(menuChange, answer,false);
         correct.put("next_message", "http://localhost:9999/api/stuard?q=");
         correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
         return correct;
@@ -148,8 +139,7 @@ public class RestMenuController  {
 
     @GetMapping("/question/find")
     public Map<String,Object> getFindQuestion(){
-        Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
-                "Вы нашли ответ на наш вопрос?",true);
+        Map<String, Object> correct = СhangeMessageAndButtons.change(menuQuestion, QUESTION_FIND,true);
         correct.put("next_message", "http://localhost:9999/api/question/find/answer?q=");
         correct.put("next_redirect", null);
         return correct;
@@ -157,8 +147,7 @@ public class RestMenuController  {
     @GetMapping("/question/find/answer")
     public Map<String,Object> getFindYesNo(@RequestParam("q") String answer){
         if("Нет".equals(answer)){
-            Map<String, Object> correct = СhangeMessageAndButtons.changeMessageAndButtons(menuQuestion,
-                    "Опишите вопрос, как можно подробнее. Так же укажите почту для связи.",false);
+            Map<String, Object> correct = СhangeMessageAndButtons.change(menuQuestion, QUESTION_MAIL,false);
             correct.put("next_message", "http://localhost:9999/api/stuard?q=");
             correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
             return correct;
@@ -178,13 +167,13 @@ public class RestMenuController  {
 
     @GetMapping("/validation")
     public ResponseEntity<?> getAnswer(@RequestParam("q") String str){
-        if("Найти необходимые данные".equals(str)){
+        if(FIND_MENU.equals(str)){
             return ResponseEntity.ok(getMenuFindData());
         }
-        else if("Задать вопрос о платформе".equals(str)){
+        else if(QUESTION_MENU.equals(str)){
             return ResponseEntity.ok(getQuestion());
         }
-        else if("Создать запрос на изменение".equals(str)){
+        else if(CREATE_MENU.equals(str)){
             return ResponseEntity.ok(getChangeMenu(false));
         }
         return ResponseEntity.ok(getMainMenu(true));

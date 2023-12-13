@@ -18,7 +18,7 @@ public class СhangeMessageAndButtons {
         correct.put("buttonData",buttons);
         return correct;
     }
-    public static Map<String, Object> changeMessageAndButtons(MainMenu mainMenu, String message,boolean addButtons){
+    public static Map<String, Object> change(MainMenu mainMenu, String message,boolean addButtons){
         Map<String,Object> correct = mainMenu.getMenu();
         Map<String,Object> change = (Map<String, Object>) correct.get("bubbleData");
         change.put("message",message);

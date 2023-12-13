@@ -1,7 +1,6 @@
 package com.example.apidataib.config;
 
 import com.example.apidataib.model.MainMenu;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.apidataib.constants.StringConstants.*;
+
 @Configuration
 @ComponentScan("com.example.apidataib")
 @EnableWebMvc
@@ -30,7 +30,7 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public MainMenu menuInput(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu mainMenu = new MainMenu("Необходимо ввести адрес платформы Universe DG");
+        MainMenu mainMenu = new MainMenu(INPUT);
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("status",200);
@@ -43,14 +43,13 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public MainMenu mainMenu(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu mainMenu = new MainMenu("Привет! Я чат бот платформы Universe DG. Чем могу помочь?");
+        MainMenu mainMenu = new MainMenu(HELLO);
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("status",200);
         mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
         mainMenu.setMenu("next_redirect", null);
-        mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
-                                                        "Создать запрос на изменение"));
+        mainMenu.setMenu("buttonData",List.of(FIND_MENU,QUESTION_MENU,CREATE_MENU));
         mainMenu.setMenu("bubbleData",answerBot);
         return mainMenu;
     }
@@ -59,14 +58,13 @@ public class SpringConfig implements WebMvcConfigurer {
     @Scope("prototype")
     public MainMenu menuData(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu menuData = new MainMenu("Выберите тип данных, которые вас интересуют");
+        MainMenu menuData = new MainMenu(CHOOSE_TYPE);
         answerBot.put("name",robot);
         answerBot.put("message",menuData.getAnswerBot());
         menuData.setMenu("status",200);
         menuData.setMenu("next_message", "http://localhost:9999/api/find_data/validation?q=");
         menuData.setMenu("next_redirect", null);
-        menuData.setMenu("buttonData",List.of("Проверка качества","Проверка качества FormIT",
-                "Правило качества"));
+        menuData.setMenu("buttonData",List.of(CHECK,CHECK_FORMIT,RULE));
         menuData.setMenu("bubbleData",answerBot);
         return menuData;
     }
@@ -74,7 +72,7 @@ public class SpringConfig implements WebMvcConfigurer {
     @Scope("prototype")
     public MainMenu menuQuestion(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu menuQuestion = new MainMenu("Какой раздел системы Universe DG вас интересует?");
+        MainMenu menuQuestion = new MainMenu(DOCS);
         answerBot.put("name",robot);
         answerBot.put("message",menuQuestion.getAnswerBot());
         menuQuestion.setMenu("status",200);
@@ -89,12 +87,11 @@ public class SpringConfig implements WebMvcConfigurer {
     @Scope("prototype")
     public MainMenu menuChange(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu menuChange = new MainMenu("Какого рода ошибка обнаружена?");
+        MainMenu menuChange = new MainMenu(ERROR_DETECTED);
         answerBot.put("name",robot);
         answerBot.put("message",menuChange.getAnswerBot());
         menuChange.setMenu("status",200);
-        menuChange.setMenu("buttonData",List.of("Неполные данные","Неакутальные данные",
-                "Другое"));
+        menuChange.setMenu("buttonData",List.of(NOT_FULL,NON_ACTUAL,ANOTHER));
         menuChange.setMenu("next_message", "http://localhost:9999/api/change/validation?q=");
         menuChange.setMenu("next_redirect", null);
         menuChange.setMenu("bubbleData",answerBot);
@@ -104,11 +101,10 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public MainMenu menuHelp(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu mainMenu = new MainMenu("Я могу еще чем-то помочь?");
+        MainMenu mainMenu = new MainMenu(HELP);
         answerBot.put("name",robot);
         answerBot.put("message",mainMenu.getAnswerBot());
-        mainMenu.setMenu("buttonData",List.of("Найти необходимые данные","Задать вопрос о платформе",
-                "Создать запрос на изменение"));
+        mainMenu.setMenu("buttonData",List.of(FIND_MENU,QUESTION_MENU,CREATE_MENU));
         mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
         mainMenu.setMenu("next_redirect", null);
         mainMenu.setMenu("status",200);
@@ -118,7 +114,7 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public MainMenu menuStuard(){
         Map<String,String> answerBot = new HashMap<>();
-        MainMenu menuStuard = new MainMenu("Спасибо за ваш запрос! Он будет передан стюарду данных и проверен");
+        MainMenu menuStuard = new MainMenu(STUARD);
         answerBot.put("name",robot);
         answerBot.put("message",menuStuard.getAnswerBot());
         menuStuard.setMenu("next_message", "http://localhost:9999/api/help?q=");
