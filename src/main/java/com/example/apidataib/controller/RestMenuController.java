@@ -71,6 +71,7 @@ public class RestMenuController  {
         Map<String,Object> correct = СhangeMessageAndButtons.change(menuData, FIND_MENU_MESSAGE,false);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat?q=");
         correct.put("next_redirect", "http://localhost:9999/api/site?q=");
+        correct.put("next_query",null);
         return correct;
     }
 
@@ -91,6 +92,7 @@ public class RestMenuController  {
         Map<String,Object> correct = СhangeMessageAndButtons.change(menuData, FIND_MENU_REPEAT,true);
         correct.put("next_message", "http://localhost:9999/api/find_data/message/repeat/answer?q=");
         correct.put("next_redirect", null);
+        correct.put("next_query",null);
         return correct;
     }
 
@@ -128,7 +130,8 @@ public class RestMenuController  {
     public Map<String, Object> getChangeAnswer(String answer){
         Map<String, Object> correct = СhangeMessageAndButtons.change(menuChange, answer,false);
         correct.put("next_message", "http://localhost:9999/api/stuard?q=");
-        correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
+        correct.put("next_redirect", null);
+        correct.put("next_query", "http://localhost:9999/api/sendMessageOnMail?q=");
         return correct;
     }
 
@@ -142,6 +145,7 @@ public class RestMenuController  {
         Map<String, Object> correct = СhangeMessageAndButtons.change(menuQuestion, QUESTION_FIND,true);
         correct.put("next_message", "http://localhost:9999/api/question/find/answer?q=");
         correct.put("next_redirect", null);
+        correct.put("next_query",null);
         return correct;
     }
     @GetMapping("/question/find/answer")
@@ -149,7 +153,8 @@ public class RestMenuController  {
         if("Нет".equals(answer)){
             Map<String, Object> correct = СhangeMessageAndButtons.change(menuQuestion, QUESTION_MAIL,false);
             correct.put("next_message", "http://localhost:9999/api/stuard?q=");
-            correct.put("next_redirect", "http://localhost:9999/api/sendMessageOnMail?q=");
+            correct.put("next_redirect", null);
+            correct.put("next_query", "http://localhost:9999/api/sendMessageOnMail?q=");
             return correct;
         }
         return getHelp();

@@ -35,7 +35,8 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("message",mainMenu.getAnswerBot());
         mainMenu.setMenu("status",200);
         mainMenu.setMenu("next_message", "http://localhost:9999/api/menu?q=");
-        mainMenu.setMenu("next_redirect", "http://localhost:9999/api/input_url?q=");
+        mainMenu.setMenu("next_redirect", null);
+        mainMenu.setMenu("next_query", "http://localhost:9999/api/input_url?q=");
         mainMenu.setMenu("bubbleData",answerBot);
         mainMenu.setMenu("buttonData",new ArrayList<>());
         return mainMenu;
@@ -49,6 +50,7 @@ public class SpringConfig implements WebMvcConfigurer {
         mainMenu.setMenu("status",200);
         mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
         mainMenu.setMenu("next_redirect", null);
+        mainMenu.setMenu("next_query", null);
         mainMenu.setMenu("buttonData",List.of(FIND_MENU,QUESTION_MENU,CREATE_MENU));
         mainMenu.setMenu("bubbleData",answerBot);
         return mainMenu;
@@ -64,6 +66,7 @@ public class SpringConfig implements WebMvcConfigurer {
         menuData.setMenu("status",200);
         menuData.setMenu("next_message", "http://localhost:9999/api/find_data/validation?q=");
         menuData.setMenu("next_redirect", null);
+        menuData.setMenu("next_query", null);
         menuData.setMenu("buttonData",List.of(CHECK,CHECK_FORMIT,RULE));
         menuData.setMenu("bubbleData",answerBot);
         return menuData;
@@ -80,6 +83,7 @@ public class SpringConfig implements WebMvcConfigurer {
         menuQuestion.setMenu("bubbleData",answerBot);
         menuQuestion.setMenu("next_message", "http://localhost:9999/api/question/find?q=");
         menuQuestion.setMenu("next_redirect", "http://localhost:9999/api/find_doc?q=");
+        menuQuestion.setMenu("next_query", null);
         return menuQuestion;
     }
 
@@ -94,6 +98,7 @@ public class SpringConfig implements WebMvcConfigurer {
         menuChange.setMenu("buttonData",List.of(NOT_FULL,NON_ACTUAL,ANOTHER));
         menuChange.setMenu("next_message", "http://localhost:9999/api/change/validation?q=");
         menuChange.setMenu("next_redirect", null);
+        menuChange.setMenu("next_query", null);
         menuChange.setMenu("bubbleData",answerBot);
         return menuChange;
     }
@@ -107,6 +112,7 @@ public class SpringConfig implements WebMvcConfigurer {
         mainMenu.setMenu("buttonData",List.of(FIND_MENU,QUESTION_MENU,CREATE_MENU));
         mainMenu.setMenu("next_message", "http://localhost:9999/api/validation?q=");
         mainMenu.setMenu("next_redirect", null);
+        mainMenu.setMenu("next_query", null);
         mainMenu.setMenu("status",200);
         mainMenu.setMenu("bubbleData",answerBot);
         return mainMenu;
@@ -119,6 +125,7 @@ public class SpringConfig implements WebMvcConfigurer {
         answerBot.put("message",menuStuard.getAnswerBot());
         menuStuard.setMenu("next_message", "http://localhost:9999/api/help?q=");
         menuStuard.setMenu("next_redirect", null);
+        menuStuard.setMenu("next_query", null);
         menuStuard.setMenu("status",200);
         menuStuard.setMenu("buttonData",new ArrayList<>());
         menuStuard.setMenu("bubbleData",answerBot);
