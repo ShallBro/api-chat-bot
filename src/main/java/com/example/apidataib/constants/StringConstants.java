@@ -20,7 +20,7 @@ public class StringConstants {
     public static final String NOT_FULL_MESSAGE = "Прикрепите ссылку на данные, " +
             "которые необходимо дополнить и обоснование для изменения. " +
             "Так же укажите почту для связи.";
-    public static final String NON_ACTUAL = "Неакутальные данные";
+    public static final String NON_ACTUAL = "Неактуальные данные";
     public static final String NON_ACTUAL_MESSAGE = "Прикрепите ссылку на данные, которые необходимо" +
             " удалить и обоснование для удаления." +
             "Так же укажите почту для связи.";
