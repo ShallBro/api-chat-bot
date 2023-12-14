@@ -19,6 +19,6 @@ public class MailController {
     @GetMapping("/sendMessageOnMail")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void mailSend(@RequestParam("q") String message){
-        mymailSender.send("Тикет",message);
+        mymailSender.send(  "Тикет",message);
     }
 }
