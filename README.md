@@ -8,7 +8,7 @@
 
 https://github.com/ShallBro/api-chat-bot/assets/55994241/024c639e-2126-4a73-a5ae-8dbdae19ec48
 
-Для того, чтобы собрать и запустить сервер введите следующие команды:
+Для того, чтобы собрать и запустить сервер введите следующие команды: <br/>
 mvn package <br/>
 mvn install <br/>
 java -jar target/api-data-ib-0.0.1-SNAPSHOT.jar
