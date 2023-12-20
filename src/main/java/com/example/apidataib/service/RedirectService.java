@@ -31,10 +31,9 @@ public class RedirectService {
     public ModelAndView redirectSite(String str) throws UnsupportedEncodingException {
         String encodedStr = URLEncoder.encode(str, StandardCharsets.UTF_8.toString());
         String replaceStr = encodedStr.replace("+", "%20");
-        String urlUser = url.getUrl() + "#/data/asset_search/";
-        String appendStr = url.parseUrlUser();
-        String urlEnd = url.getUrlEnd();
-        String url = urlUser + appendStr + replaceStr + urlEnd;
-        return new ModelAndView(new RedirectView(url));
+        StringBuilder urlStr = new StringBuilder();
+        urlStr.append(url.getUrl() + "#/data/asset_search/").append(url.parseUrlUser()).append(replaceStr)
+                .append(url.getUrlEnd());
+        return new ModelAndView(new RedirectView(String.valueOf(urlStr)));
     }
 }

@@ -25,6 +25,3 @@ public class MyMailSender {
     }
 
 }
-
-// Временная почта
-// xabef45861@gyxmz.com
