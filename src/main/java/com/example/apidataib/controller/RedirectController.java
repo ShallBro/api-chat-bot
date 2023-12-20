@@ -1,8 +1,7 @@
 package com.example.apidataib.controller;
 
-import com.example.apidataib.model.URL;
+import com.example.apidataib.service.RedirectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -15,41 +14,31 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@Controller
+    @Controller
     @Component
     @CrossOrigin
     @RequestMapping("/api")
     public class RedirectController {
-        private URL url = new URL();;
+        private RedirectService redirectService;
 
-        private final String strBeg = "https://doc.ru.universe-data.ru/2.5.0-EE/search.html?q=";
-        private final String strEnd = "&check_keywords=yes&area=default#";
-
-        public void setUrlMessage(String firstMessage) {
-            this.url.setUrlUser(firstMessage);
+        @Autowired
+        public RedirectController(RedirectService redirectService){
+            this.redirectService = redirectService;
         }
-        @GetMapping("/input_url")
+
+        @PostMapping ("/input_url")
         @ResponseStatus(HttpStatus.NO_CONTENT)
         public void input(@RequestParam("q") String input){
-            url.setUrl(input);
+            redirectService.setUrl(input);
         }
 
         @GetMapping("/find_doc")
         public ModelAndView findDocumentation(@RequestParam("q") String str){
-            String encodedStr = UriUtils.encode(str, "UTF-8");
-            String replaceStr = encodedStr.replaceAll(" ","+");
-            String url = strBeg + replaceStr + strEnd;
-            return new ModelAndView(new RedirectView(url));
+            return redirectService.findDocumentation(str);
         }
         @GetMapping("/site")
         public ModelAndView redirectSite(@RequestParam("q") String str) throws UnsupportedEncodingException {
-            String encodedStr = URLEncoder.encode(str, StandardCharsets.UTF_8.toString());
-            String replaceStr = encodedStr.replace("+", "%20");
-            String urlUser = url.getUrl() + "#/data/asset_search/";
-            String appendStr = url.parseUrlUser();
-            String urlEnd = url.getUrlEnd();
-            String url = urlUser + appendStr + replaceStr + urlEnd;
-            return new ModelAndView(new RedirectView(url));
+            return redirectService.redirectSite(str);
         }
 
     }
