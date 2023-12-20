@@ -20,6 +20,6 @@ public class MailController {
 
     @PostMapping ("/sendMessageOnMail")
     public void mailSend(@RequestParam("q") String message){
-        mymailSender.send("Тикет",message);
+        mymailSender.send(  "Тикет",message);
     }
 }
