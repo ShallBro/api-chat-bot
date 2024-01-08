@@ -1,19 +1,17 @@
 package com.example.apidataib.service;
 
 import com.example.apidataib.model.MainMenu;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.example.apidataib.model.СhangeMessageAndButtons;
-import com.example.apidataib.model.MainMenu;
-import com.example.apidataib.service.RedirectService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.example.apidataib.constants.StringConstants.*;
 @Service
+@AllArgsConstructor
 public class MenuService {
     private final RedirectService redirectService;
     private final MainMenu mainMenu;
@@ -27,31 +25,6 @@ public class MenuService {
     private final MainMenu sourceQuestion;
     private final MainMenu menuInput;
 
-    @Autowired
-    public MenuService(
-            MainMenu mainMenu,
-            MainMenu menuData,
-            MainMenu menuQuestion,
-            MainMenu menuChange,
-            MainMenu menuHelp,
-            MainMenu sourceData,
-            MainMenu sourceChange,
-            MainMenu menuStuard,
-            MainMenu sourceQuestion,
-            MainMenu menuInput,
-            RedirectService redirectService) {
-        this.mainMenu = mainMenu;
-        this.menuData = menuData;
-        this.menuQuestion = menuQuestion;
-        this.menuChange = menuChange;
-        this.menuHelp = menuHelp;
-        this.sourceData = sourceData;
-        this.sourceChange = sourceChange;
-        this.menuStuard = menuStuard;
-        this.sourceQuestion = sourceQuestion;
-        this.menuInput = menuInput;
-        this.redirectService = redirectService;
-    }
 
     public Map<String,Object> getInput(){
         return menuInput.getMenu();
@@ -76,7 +49,7 @@ public class MenuService {
         return correct;
     }
 
-    public Map<String, Object> getMenuFindDataValid(@RequestParam("q") String str){
+    public Map<String, Object> getMenuFindDataValid(String str){
         List<String> buttons = (List<String>) sourceData.getMenu().get("buttonData");
         for (String button : buttons) {
             if (button.equals(str)){
@@ -95,7 +68,7 @@ public class MenuService {
         return correct;
     }
 
-    public Map<String,Object> getRepeat(@RequestParam("q") String answer){
+    public Map<String,Object> getRepeat(String answer){
         if("Да".equals(answer)){
             return sourceData.getMenu();
         }
@@ -109,7 +82,7 @@ public class MenuService {
         return sourceChange.getMenu();
     }
 
-    public ResponseEntity<?> getMenuChangeValid(@RequestParam("q") String str){
+    public ResponseEntity<?> getMenuChangeValid(String str){
         if("Неполные данные".equals(str)){
             return ResponseEntity.ok(getChangeAnswer(NOT_FULL_MESSAGE));
         }
@@ -141,7 +114,7 @@ public class MenuService {
         return correct;
     }
 
-    public Map<String,Object> getFindYesNo(@RequestParam("q") String answer){
+    public Map<String,Object> getFindYesNo(String answer){
         if("Нет".equals(answer)){
             Map<String, Object> correct = СhangeMessageAndButtons.change(menuQuestion, QUESTION_MAIL,false);
             correct.put("next_message", "http://localhost:9999/api/stuard?q=");
@@ -160,7 +133,7 @@ public class MenuService {
         return menuStuard.getMenu();
     }
 
-    public ResponseEntity<?> getAnswer(@RequestParam("q") String str){
+    public ResponseEntity<?> getAnswer(String str){
         if(FIND_MENU.equals(str)){
             return ResponseEntity.ok(getMenuFindData());
         }

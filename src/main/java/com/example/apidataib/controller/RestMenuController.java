@@ -33,7 +33,7 @@ public class RestMenuController  {
     }
 
     @GetMapping("/find_data/validation")
-    public Map<String, Object> getMenuFindDataValid(@RequestParam("q") String str){
+    public Map<String, Object> getMenuFindDataValid(@RequestParam("q") String str) {
         return menuService.getMenuFindDataValid(str);
     }
 
@@ -53,7 +53,7 @@ public class RestMenuController  {
     }
 
     @GetMapping("/change/validation")
-    public ResponseEntity<?> getMenuChangeValid(@RequestParam("q") String str){
+    public ResponseEntity<?> getMenuChangeValid(@RequestParam("q") String str) {
         return menuService.getMenuChangeValid(str);
     }
 
@@ -71,8 +71,9 @@ public class RestMenuController  {
     public Map<String,Object> getFindQuestion(){
         return menuService.getFindQuestion();
     }
+
     @GetMapping("/question/find/answer")
-    public Map<String,Object> getFindYesNo(@RequestParam("q") String answer){
+    public Map<String,Object> getFindYesNo(@RequestParam("q") String answer) {
         return menuService.getFindYesNo(answer);
     }
 

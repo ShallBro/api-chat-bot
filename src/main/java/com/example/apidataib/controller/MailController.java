@@ -2,8 +2,6 @@ package com.example.apidataib.controller;
 
 import com.example.apidataib.service.MyMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +16,8 @@ public class MailController {
         this.mymailSender = mailSender;
     }
 
-    @PostMapping ("/sendMessageOnMail")
-    public void mailSend(@RequestParam("q") String message){
-        mymailSender.send(  "Тикет",message);
+    @PostMapping("/sendMessageOnMail")
+    public void mailSend(@RequestParam("q") String message) {
+        mymailSender.send("Тикет", message);
     }
 }
